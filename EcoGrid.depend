@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1782254175 source:d:\facultad\diseno de objetos\ecogridstorani\main.cpp
+	<iostream>
+	"nodoRed.h"
+
+1782257603 d:\facultad\diseno de objetos\ecogridstorani\nodored.h
+	<string>
+	<stdexcept>
+	<iostream>
+	<iomanip>
+
