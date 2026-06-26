@@ -18,10 +18,6 @@ class NodoProsumidor : public NodoRed{
         return produccion_ - consumo_;
     }
 
-    void actualizarBalance(double variacionKwh) override {
-        incrementarBalance(variacionKwh);
-    }
-
     string getTipo() const override {
         return "Prosumidor";
     }

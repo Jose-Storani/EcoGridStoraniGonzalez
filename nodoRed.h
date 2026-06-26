@@ -28,13 +28,13 @@ protected:
             throw invalid_argument("El saldo no puede ser negativo.");
     }
 
-    void incrementarBalance(double aumentoKwh) {
-        balanceEnergia_ += aumentoKwh;
-    }
+
 public:
     virtual double calcularExcedente() const = 0;
 
-    virtual void actualizarBalance(double variacionKwh) = 0;
+    virtual void actualizarBalance(double variacionKwh) {
+         balanceEnergia_ += variacionKwh;
+    };
 
     virtual string getTipo() const = 0;
 
