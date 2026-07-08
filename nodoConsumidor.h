@@ -32,9 +32,9 @@ class NodoConsumidor : public NodoRed {
                        double consumo, PerfilConsumo perfil)
             : NodoRed(id, ubicacion, 0.0, saldo)
         {
-            consumo_ = consumo,
+            consumo_ = consumo;
             perfil_ = perfil;
-        };
+        }
 
         //excedente siempre <= 0 porque no produce, solo consume
         double calcularExcedente() const override {
@@ -55,12 +55,12 @@ class NodoConsumidor : public NodoRed {
             return consumo_;
              };
 
-        void setConsumo(double nuevoConsumo) {
-             consumo_ = nuevoConsumo;
-             };
-
         PerfilConsumo getPerfil() const {
             return perfil_;
             };
+
+        void setConsumo(double nuevoConsumo) {
+             consumo_ = nuevoConsumo;
+             };
 
 };
