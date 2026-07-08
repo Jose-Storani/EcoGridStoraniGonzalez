@@ -24,6 +24,7 @@
 		<Unit filename="nodoConsumidor.h" />
 		<Unit filename="nodoProsumidor.h" />
 		<Unit filename="nodoRed.h" />
+		<Unit filename="orden.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
