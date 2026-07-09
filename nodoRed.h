@@ -7,8 +7,6 @@
 
 using namespace std;
 
-
-
 class NodoRed {
 private:
     int         id_;
@@ -68,8 +66,8 @@ public:
         saldoCuenta_ = nuevoSaldo;
     }
 
-    void ajustarSaldo(double variacionKwh) {
-        setSaldoCuenta(saldoCuenta_ + variacionKwh);
+    void ajustarSaldo(double variacionCreditos) {
+        setSaldoCuenta(saldoCuenta_ + variacionCreditos);
     }
 
     void setBalanceEnergia(double balance) {

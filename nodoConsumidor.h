@@ -39,11 +39,11 @@ class NodoConsumidor : public NodoRed {
         //excedente siempre <= 0 porque no produce, solo consume
         double calcularExcedente() const override {
             return -consumo_;
-        };
+        }
 
         string getTipo() const override {
             return "Consumidor";
-        };
+        }
 
         void infoNodo() const override {
             NodoRed::infoNodo();

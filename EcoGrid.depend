@@ -1,11 +1,24 @@
 # depslib dependency file v1.0
-1782254175 source:d:\facultad\diseno de objetos\ecogridstorani\main.cpp
+1782435291 source:d:\facultad\diseno de objetos\ecogridstorani\main.cpp
 	<iostream>
 	"nodoRed.h"
+	"nodoConsumidor.h"
+	"nodoProsumidor.h"
+	"nodoBateria.h"
 
-1782257603 d:\facultad\diseno de objetos\ecogridstorani\nodored.h
+1783626229 d:\facultad\diseno de objetos\ecogridstorani\nodored.h
 	<string>
 	<stdexcept>
 	<iostream>
 	<iomanip>
+
+1783626560 d:\facultad\diseno de objetos\ecogridstorani\nodoconsumidor.h
+	"NodoRed.h"
+
+1782435865 d:\facultad\diseno de objetos\ecogridstorani\nodoprosumidor.h
+	"NodoRed.h"
+
+1782435875 d:\facultad\diseno de objetos\ecogridstorani\nodobateria.h
+	"NodoRed.h"
+	<stdexcept>
 

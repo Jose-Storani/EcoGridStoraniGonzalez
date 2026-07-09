@@ -19,12 +19,15 @@
 				<Option compiler="gcc-mingw64" />
 			</Target>
 		</Build>
+		<Unit filename="docs/UML_diagrama_clases.png" />
 		<Unit filename="main.cpp" />
 		<Unit filename="nodoBateria.h" />
 		<Unit filename="nodoConsumidor.h" />
 		<Unit filename="nodoProsumidor.h" />
 		<Unit filename="nodoRed.h" />
 		<Unit filename="orden.h" />
+		<Unit filename="sql/crear_esquema.sql" />
+		<Unit filename="transaccionEnergia.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
