@@ -1,7 +1,8 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-
+#include <soci/soci.h>
+#include <soci/sqlite3/soci-sqlite3.h>
 #include "ecogrid.h"
 
 
@@ -13,8 +14,8 @@ using namespace std;
 //    201       compra  7        8    3.0
 //    202       compra  9        6    2.4
 //
-//  Resultado esperado (según el enunciado):
-//    - 1 transacción: vendedor 5, comprador 7, 8 kWh, precio 2.75
+//  Resultado esperado (segï¿½n el enunciado):
+//    - 1 transacciï¿½n: vendedor 5, comprador 7, 8 kWh, precio 2.75
 //    - Orden 101 queda con 2 kWh remanentes (sin comprador)
 //    - Orden 201 se completa
 //    - Orden 202 (compra a 2.4) NO cruza con 101 (venta a 2.5)
@@ -25,7 +26,18 @@ void imprimirSeparador(const string titulo) {
 }
 
 int main() {
-    imprimirSeparador("Creación de nodos");
+    try {
+        // Tu cÃ³digo de conexiÃ³n
+        soci::session sql(soci::sqlite3, "tp.db");
+        std::cout << "Â¡ConexiÃ³n exitosa! El archivo tp.db se creÃ³." << std::endl;
+        
+        // Opcional: Probar crear una tabla bÃ¡sica
+        sql << "CREATE TABLE IF NOT EXISTS prueba (id INTEGER PRIMARY KEY)";
+    } catch (const std::exception& e) {
+        std::cerr << "Error de base de datos: " << e.what() << std::endl;
+    }
+
+    imprimirSeparador("Creaciï¿½n de nodos");
     //con puntero inteligente para ahorrar borrarlo manual
     vector<unique_ptr<NodoRed>> nodos;
 
@@ -71,13 +83,13 @@ int main() {
 
     cout << "\n===== TICK hora " << hora << " =====" << endl;
 
-    // si la batería tiene carga del tick anterior, la oferta primero
+    // si la baterï¿½a tiene carga del tick anterior, la oferta primero
     if (bateria.getCargaActual() > 0.001) {
-        double precioBase = 2.5; // por ahora fijo, después viene de BD
+        double precioBase = 2.5; // por ahora fijo, despuï¿½s viene de BD
         gridManager.ofertarEnergiaBateria(bateria, precioBase, secuencia++);
     }
 
-    //leer las órdenes del CSV
+    //leer las ï¿½rdenes del CSV
     vector<Orden> ordenes = CSVParser::leerOfertas(hora, secuencia);
     gridManager.cargarOrdenes(ordenes);
 
@@ -88,14 +100,14 @@ int main() {
         trans.imprimir();
     }
 
-    // excedente restante va a la batería
+    // excedente restante va a la baterï¿½a
     double excedente = gridManager.calcularExcedenteNoVendido();
     if (excedente > 0.001) {
         cout << "Excedente a bateria: " << excedente << " kWh" << endl;
         bateria.absorberExcedente(excedente); //revisar calculo, el excedente es muy alto al final decada tick
     }
 
-    //limpiar el libro para el próximo tick
+    //limpiar el libro para el prï¿½ximo tick
     gridManager.limpiarLibro();
 }
 

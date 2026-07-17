@@ -37,7 +37,8 @@ CREATE TABLE CONFIG_TARIFAS (
     
 -- Disparador (Trigger)
 CREATE OR REPLACE TRIGGER trg_validar_saldo
-BEFORE INSERT ON TRANSACCIONESFOR EACH ROWDECLARE v_saldo_comprador NUMBER;
+BEFORE 
+INSERT ON TRANSACCIONESFOR EACH ROWDECLARE v_saldo_comprador NUMBER;
 BEGIN
     SELECT saldo_cuenta 
     INTO v_saldo_comprador 
