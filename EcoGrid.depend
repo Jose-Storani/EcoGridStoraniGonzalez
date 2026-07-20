@@ -59,15 +59,13 @@
 	<iomanip>
 	"orden.h"
 
-1784502659 source:d:\facultad\diseno de objetos\ecogridstorani\src\main.cpp
+1784505736 source:d:\facultad\diseno de objetos\ecogridstorani\src\main.cpp
 	<iostream>
 	<memory>
 	<vector>
-	<soci/soci.h>
-	<soci/sqlite3/soci-sqlite3.h>
 	"ecogrid.h"
 
-1783983816 d:\facultad\diseno de objetos\ecogridstorani\src\ecogrid.h
+1784505741 d:\facultad\diseno de objetos\ecogridstorani\src\ecogrid.h
 	"nodoRed.h"
 	"nodoConsumidor.h"
 	"nodoProsumidor.h"
@@ -76,14 +74,16 @@
 	"transaccionEnergia.h"
 	"gridManager.h"
 	"CSVParser.h"
+	"capaDatos.h"
+	"util/ConfigReader.h"
 
-1783725077 d:\facultad\diseno de objetos\ecogridstorani\src\nodored.h
+1784505664 d:\facultad\diseno de objetos\ecogridstorani\src\nodored.h
 	<string>
 	<stdexcept>
 	<iostream>
 	<iomanip>
 
-1783626560 d:\facultad\diseno de objetos\ecogridstorani\src\nodoconsumidor.h
+1784505667 d:\facultad\diseno de objetos\ecogridstorani\src\nodoconsumidor.h
 	"NodoRed.h"
 
 1782435865 d:\facultad\diseno de objetos\ecogridstorani\src\nodoprosumidor.h
@@ -93,14 +93,15 @@
 	"NodoRed.h"
 	<stdexcept>
 
-1783390262 d:\facultad\diseno de objetos\ecogridstorani\src\orden.h
+1784505778 d:\facultad\diseno de objetos\ecogridstorani\src\orden.h
+	<cstdint>
 
 1783980936 d:\facultad\diseno de objetos\ecogridstorani\src\transaccionenergia.h
 	<chrono>
 	<iostream>
 	<iomanip>
 
-1784502659 d:\facultad\diseno de objetos\ecogridstorani\src\gridmanager.h
+1784505857 d:\facultad\diseno de objetos\ecogridstorani\src\gridmanager.h
 	<map>
 	<queue>
 	<vector>
@@ -601,4 +602,21 @@
 
 1782650234 c:\msys64\mingw64\include\sqlite3.h
 	<stdarg.h>
+
+1784505794 d:\facultad\diseno de objetos\ecogridstorani\src\capadatos.h
+	<soci/soci.h>
+	<soci/sqlite3/soci-sqlite3.h>
+	<memory>
+	<string>
+	<vector>
+	<iostream>
+	"nodoRed.h"
+	"nodoBateria.h"
+	"transaccionEnergia.h"
+
+1784505656 d:\facultad\diseno de objetos\ecogridstorani\src\util\configreader.h
+	<fstream>
+	<string>
+	<unordered_map>
+	<stdexcept>
 

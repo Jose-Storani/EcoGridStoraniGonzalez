@@ -45,6 +45,10 @@ class NodoConsumidor : public NodoRed {
             return "Consumidor";
         }
 
+        string getPerfilConsumoStr() const override {
+            return perfilToString(perfil_);
+        }
+
         void infoNodo() const override {
             NodoRed::infoNodo();
             cout << "perfil=" << perfilToString(perfil_)

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 struct Orden {
     int      idOrden;
     bool     esCompra;    // true = orden de compra | false = orden de venta

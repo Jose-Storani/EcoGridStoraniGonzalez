@@ -67,8 +67,8 @@ class GridManager {
         vector<TransaccionEnergia> transacciones;
 
         while (!bidMap_.empty() && !askMap_.empty()) {
-            auto mejorBid = bidMap_.begin(); // precio de compra m�s alto
-            auto mejorAsk = askMap_.begin(); // precio de venta m�s bajo
+            auto mejorBid = bidMap_.begin(); // precio de compra mas alto
+            auto mejorAsk = askMap_.begin(); // precio de venta mas bajo
 
             double precioBid = mejorBid->first;// devuelve 0 ---
             double precioAsk = mejorAsk->first; // devuelve 20 - 50
@@ -117,21 +117,64 @@ class GridManager {
     }
 
 
-    double calcularExcedenteNoVendido() const {
-        double total = 0.0;
-        for (auto [precio, cola] : askMap_) {
+    // Todo lo que quedo sin comprador en askMap_ se le "vende" a la bateria
+    // comunitaria al precio base horario, generando una transaccion real por
+    // cada orden remanente (asi el vendedor cobra y la bateria se carga).
+    // Si la oferta remanente es de la propia bateria (no se vendio), la carga
+    // simplemente vuelve a ella sin generar una transaccion consigo misma.
+    vector<TransaccionEnergia> liquidarExcedenteABateria(NodoBateria& bateria, double precioBaseHorario) {
+        vector<TransaccionEnergia> transacciones;
+
+        for (auto& [precio, cola] : askMap_) {
             while (!cola.empty()) {
-                total += cola.front().kwh;
+                const Orden& orden = cola.front();
+                if (orden.idNodo == bateria.getId()) {
+                    bateria.absorberExcedente(orden.kwh);
+                } else {
+                    transacciones.emplace_back(orden.idNodo, bateria.getId(), orden.kwh, precioBaseHorario);
+                    bateria.absorberExcedente(orden.kwh);
+                }
                 cola.pop();
             }
         }
-        return total;
+        askMap_.clear();
+
+        return transacciones;
     }
 
-
     void limpiarLibro() {
+        if (!bidMap_.empty()) {
+            for (const auto& [precio, cola] : bidMap_) {
+                cout << "[GridManager] Demanda insatisfecha: " << cola.size()
+                     << " orden(es) de compra a precio " << precio << " sin vendedor." << endl;
+            }
+        }
         bidMap_.clear();
         askMap_.clear();
+    }
+
+    // Metodo principal del tick: ofrece la energia de la bateria (si tiene
+    // carga), carga las ordenes del CSV, ejecuta el matching, liquida el
+    // excedente sin comprador contra la bateria y limpia el libro. No toca
+    // la base de datos: devuelve las transacciones para que quien orqueste
+    // el tick (main/CapaDatos) decida como persistirlas.
+    vector<TransaccionEnergia> procesarTick(const vector<Orden>& ofertasCSV,
+                                             NodoBateria& bateria,
+                                             double precioBaseHorario,
+                                             uint64_t& secuencia) {
+        if (bateria.getCargaActual() > 0.001) {
+            ofertarEnergiaBateria(bateria, precioBaseHorario, secuencia++);
+        }
+
+        cargarOrdenes(ofertasCSV);
+
+        vector<TransaccionEnergia> transacciones = ejecutarMatching();
+        vector<TransaccionEnergia> excedente = liquidarExcedenteABateria(bateria, precioBaseHorario);
+        transacciones.insert(transacciones.end(), excedente.begin(), excedente.end());
+
+        limpiarLibro();
+
+        return transacciones;
     }
 
     void imprimirLibro() const {

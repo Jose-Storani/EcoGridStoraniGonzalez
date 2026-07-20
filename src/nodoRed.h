@@ -36,6 +36,8 @@ public:
 
     virtual string getTipo() const = 0;
 
+    virtual string getPerfilConsumoStr() const { return ""; }
+
     virtual void infoNodo() const {
         cout << fixed << setprecision(2)
                   << "id=" << id_

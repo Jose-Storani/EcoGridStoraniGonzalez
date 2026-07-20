@@ -32,7 +32,7 @@ public:
         // saltear encabezado
         getline(archivo, linea);
 
-        // leer l�neas
+        // leer lineas
         while (getline(archivo, linea)) {
 
             if (linea.empty()) continue;

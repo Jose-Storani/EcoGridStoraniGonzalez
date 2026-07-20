@@ -28,15 +28,15 @@ class NodoBateria : public NodoRed {
 
         void absorberExcedente(double kwh) {
             if (kwh < 0.0)
-                throw invalid_argument("No se puede absorber una cantidad negativa de energía.");
+                throw invalid_argument("No se puede absorber una cantidad negativa de energia.");
             cargaActual_ += kwh;
         }
 
         void liberarEnergia(double kwh) {
             if (kwh < 0.0)
-                throw invalid_argument("No se puede liberar una cantidad negativa de energía.");
+                throw invalid_argument("No se puede liberar una cantidad negativa de energia.");
             if (kwh > cargaActual_)
-                throw invalid_argument("No se puede liberar más energía de la que la batería tiene acumulada.");
+                throw invalid_argument("No se puede liberar mas energia de la que la bateria tiene acumulada.");
             cargaActual_ -= kwh;
         }
 

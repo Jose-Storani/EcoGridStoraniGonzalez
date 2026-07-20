@@ -8,3 +8,5 @@
 #include "transaccionEnergia.h"
 #include "gridManager.h"
 #include "CSVParser.h"
+#include "capaDatos.h"
+#include "util/ConfigReader.h"

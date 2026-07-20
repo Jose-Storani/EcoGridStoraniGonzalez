@@ -1,7 +1,6 @@
-CREATE TABLE NODOS ( 
-    id_nodo NUMBER PRIMARY KEY, 
-    id_persona NUMBER,
-    ubicacion VARCHAR2(100) NOT NULL, 
+CREATE TABLE NODOS (
+    id_nodo NUMBER PRIMARY KEY,
+    ubicacion VARCHAR2(100) NOT NULL,
     tipo VARCHAR2(20) CHECK (tipo IN ('Consumidor','Prosumidor','Bateria')), 
     saldo_cuenta NUMBER DEFAULT 0 CHECK (saldo_cuenta >= 0), -- créditos
     perfil_consumo VARCHAR2(20) -- solo para Consumidores
@@ -37,8 +36,10 @@ CREATE TABLE CONFIG_TARIFAS (
     
 -- Disparador (Trigger)
 CREATE OR REPLACE TRIGGER trg_validar_saldo
-BEFORE 
-INSERT ON TRANSACCIONESFOR EACH ROWDECLARE v_saldo_comprador NUMBER;
+BEFORE INSERT ON TRANSACCIONES
+FOR EACH ROW
+DECLARE
+    v_saldo_comprador NUMBER;
 BEGIN
     SELECT saldo_cuenta 
     INTO v_saldo_comprador 
@@ -49,7 +50,8 @@ BEGIN
     END IF;
 END; 
 
--- REVISAR  -----------------------------------------------------
+-- Procedimiento almacenado: actualiza saldo_cuenta y registra la lectura
+-- historica correspondiente para cada transaccion confirmada.
 CREATE OR REPLACE PROCEDURE actualizar_saldo_y_lecturas (
     p_id_nodo IN NUMBER,
     p_kwh IN NUMBER,
@@ -72,23 +74,21 @@ END;
 -- ---------------------------------------------------------------
 -- Tarifas de los casos de prueba provistos en el TP
 -- ---------------------------------------------------------------
-INSERT INTO CONFIG_TARIFAS (hora, precio_base_kwh) VALUES (10, 1.00); [cite: 678]
-INSERT INTO CONFIG_TARIFAS (hora, precio_base_kwh) VALUES (12, 1.50); [cite: 679]
-INSERT INTO CONFIG_TARIFAS (hora, precio_base_kwh) VALUES (14, 1.00); [cite: 680]
-INSERT INTO CONFIG_TARIFAS (hora, precio_base_kwh) VALUES (15, 1.20); [cite: 681]
-INSERT INTO CONFIG_TARIFAS (hora, precio_base_kwh) VALUES (18, 2.00); [cite: 682]
+INSERT INTO CONFIG_TARIFAS (hora, precio_base_kwh) VALUES (10, 1.00);
+INSERT INTO CONFIG_TARIFAS (hora, precio_base_kwh) VALUES (12, 1.50);
+INSERT INTO CONFIG_TARIFAS (hora, precio_base_kwh) VALUES (14, 1.00);
+INSERT INTO CONFIG_TARIFAS (hora, precio_base_kwh) VALUES (15, 1.20);
+INSERT INTO CONFIG_TARIFAS (hora, precio_base_kwh) VALUES (18, 2.00);
 
 -- Nodos del Caso 1 y Caso 4
-INSERT INTO NODOS (id_nodo, ubicacion, tipo, saldo_cuenta, perfil_consumo) 
-VALUES (1, 'Zona Norte', 'Consumidor', 100.00, 'Residencial'); [cite: 685]
+INSERT INTO NODOS (id_nodo, ubicacion, tipo, saldo_cuenta, perfil_consumo)
+VALUES (1, 'Zona Norte', 'Consumidor', 100.00, 'Residencial');
 
-INSERT INTO NODOS (id_nodo, ubicacion, tipo, saldo_cuenta) 
-VALUES (2, 'Zona Centro', 'Prosumidor', 50.00); [cite: 686]
+INSERT INTO NODOS (id_nodo, ubicacion, tipo, saldo_cuenta)
+VALUES (2, 'Zona Centro', 'Prosumidor', 50.00);
 
 -- Nodo Batería Comunitaria (Nodo 99)
-INSERT INTO NODOS (id_nodo, ubicacion, tipo, saldo_cuenta) 
-VALUES (99, 'Estación Central', 'Bateria', 999999); [cite: 752]
+INSERT INTO NODOS (id_nodo, ubicacion, tipo, saldo_cuenta)
+VALUES (99, 'Estación Central', 'Bateria', 999999);
 
 COMMIT;
-
--- ---------------------------------------------------------------
