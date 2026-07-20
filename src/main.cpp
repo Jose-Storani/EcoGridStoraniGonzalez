@@ -74,9 +74,9 @@ int main() {
                 trans.imprimir();
             }
 
-            // persistencia transaccional del tick: si falla, se loguea y se sigue con el proximo tick
+
             if (!capaDatos.persistirTransacciones(transacciones, hora)) {
-                cerr << "[GridManager] Tick " << hora
+                cerr << "Tick " << hora
                      << " rechazado por la BD, se continua con el siguiente tick." << endl;
             }
         }
