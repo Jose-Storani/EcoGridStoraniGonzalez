@@ -1,0 +1,29 @@
+1) INSTALAR DEPENDENCIAS
+
+sudo apt update
+sudo apt install build-essential git libsoci-dev libsqlite3-dev
+
+2) CLONAR EL REPOSITORIO
+
+git clone https://github.com/Jose-Storani/EcoGridStoraniGonzalez.git
+cd EcoGridStoraniGonzalez
+
+ejecutat DESDE LA RAIZ DEL PROYECTO. No hay que entrar a
+ninguna subcarpeta antes de compilar o correr.
+
+3) COMPILAR
+
+g++ -std=c++17 -O2 src/main.cpp -o EcoGrid -lsoci_core -lsoci_sqlite3 -lsqlite3
+
+
+SI EL LINK FALLA (no encuentra -lsoci_core o -lsoci_sqlite3):
+ldconfig -p | grep soci
+
+y ajustar los flags -l... del comando de arriba segun lo que
+aparezca (algunas versiones agregan sufijo, tipo -lsoci_core_4_0).
+
+
+4) CORRER
+
+./EcoGrid
+
